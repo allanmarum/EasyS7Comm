@@ -2,8 +2,6 @@ import snap7
 from snap7 import util
 from enum import Enum
 
-from enum import Enum
-
 class DataType(Enum):
     BOOL = ("get_bool", "set_bool", 1)
     BYTE = ("get_byte", "set_byte", 1)
@@ -38,12 +36,10 @@ class PLCInterface:
         self.client.get_connected()
         pass
     
-    def read_db(self, db_number: int, offset_byte: int, data_type: 'DataType'):
+    def read_db_row(self, db_number: int, offset_byte: int, data_type: 'DataType'):
         data = self.client.db_read(db_number, offset_byte, data_type.size)
         get_function = getattr(util, data_type.method_get_name, None)
-        #data = util.get_string(data, 0)
-        data = get_function(data, 0)
-        return data
+        return get_function(data, 0)
     
     def disconnect(self):
         if self.client.get_connected():
@@ -52,7 +48,6 @@ class PLCInterface:
     
 if __name__ == "__main__":
     plc = PLCInterface("10.254.176.88", 0, 1)
-    data =  plc.read_db(7, 2, DataType.UINT)
+    data =  plc.read_db_row(7, 6, DataType.STRING)
     print(data)
     plc.disconnect()
-    

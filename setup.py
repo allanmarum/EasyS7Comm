@@ -1,23 +1,22 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='EasyS7Comm',
-    version='0.1.0',
-    packages=find_packages(where='src'),
-    package_dir={'': 'src'},
+    name="EasyS7Comm",
+    version="0.0.1",
+    description="Um módulo para comunicação com PLCs usando S7.",
+    author="Seu Nome",
+    author_email="seuemail@exemplo.com",
+    url="https://github.com/usuario/EasyS7Comm",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    include_package_data=True,
     install_requires=[
-        'snap7'
+        # Dependências listadas no requirements.txt ou aqui
     ],
-    description='A Python module to simplify Snap7 communication with PLCs.',
-    long_description=open('README.md').read(),
-    long_description_content_type='text/markdown',
-    author='Your Name',
-    author_email='your_email@example.com',
-    url='https://github.com/yourusername/SimplePLCCommunicator',
     classifiers=[
-        'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
+        "Programming Language :: Python :: 3",
+        "Operating System :: Windows",
     ],
-    python_requires='>=3.6',
+    python_requires=">=3.6",
 )
+

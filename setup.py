@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="EasyS7Comm",
+    name="easys7comm",
     version="0.0.1",
     description="Um módulo para comunicação com PLCs usando S7.",
     author="Seu Nome",

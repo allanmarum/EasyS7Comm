@@ -16,27 +16,7 @@ While EasyS7Comm abstracts some of Snap7's advanced features, this trade-off is 
 
 ## Features
 
-- **Read Variables:** Easily read PLC variables with just a few lines of code.
-- **Write Variables:** Quickly and simply write values to PLC variables.
-- **Simplified Connection:** Intuitively connect to S7 PLCs.
-- **Error Management:** Built-in error handling for safer operations.
-
-## Installation
-
-You can install EasyS7Comm directly via pip:
-
-```bash
-pip install easys7comm
-```
-
-Or clone the repository and install manually:
-
-```
-git clone https://github.com/yourusername/EasyS7Comm.git
-cd EasyS7Comm
-python setup.py install
-```
-
-## Basic Usage
-
-Here's a quick example to read/write PLC variables:
+- **Read Variables:** ![Read](https://img.shields.io/badge/read-partial-yellow)
+- **Write Variables:** ![Write](https://img.shields.io/badge/write-not%20developed-red)
+- **Simplified Connection:** ![Connection](https://img.shields.io/badge/read-partial-yellow)
+- **Error Management:** ![Error Handling](https://img.shields.io/badge/error%20handling-not%20developed-red)

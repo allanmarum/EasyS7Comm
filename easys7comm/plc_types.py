@@ -1,4 +1,4 @@
-# easys7comm/types.py
+# easys7comm/plc_types.py
 
 from enum import Enum
 

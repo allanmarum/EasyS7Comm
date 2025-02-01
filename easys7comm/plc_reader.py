@@ -7,7 +7,7 @@ This module provides the PLCReader class for reading data from a PLC.
 
 from snap7 import util
 from .plc_connection import PLCConnection
-from .types import DataType  # Assumes DataType is defined in your types module
+from .plc_types import DataType  # Assumes DataType is defined in your types module
 
 
 class PLCReader(PLCConnection):
@@ -38,10 +38,3 @@ class PLCReader(PLCConnection):
         if not callable(get_function):
             raise ValueError(f"Read method not available for data type '{data_type.name}'.")
         return get_function(data, 0)
-
-    # Future expansion:
-    # def read_memory(self, address: int, data_type: DataType) -> any:
-    #     pass
-    #
-    # def read_io(self, address: int, data_type: DataType) -> any:
-    #     pass

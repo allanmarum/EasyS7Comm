@@ -7,7 +7,7 @@ This module provides the PLCWriter class for writing data to a PLC.
 
 from snap7 import util
 from .plc_connection import PLCConnection
-from .types import DataType  # Assumes DataType is defined in your types module
+from .plc_types import DataType  # Assumes DataType is defined in your types module
 
 
 class PLCWriter(PLCConnection):
@@ -42,10 +42,3 @@ class PLCWriter(PLCConnection):
         set_function(data_bytes, 0, value)
         # Write the data to the PLC datablock.
         self.client.db_write(db_number, offset_byte, data_bytes)
-
-    # Future expansion:
-    # def write_memory(self, address: int, value: any, data_type: DataType) -> None:
-    #     pass
-    #
-    # def write_io(self, address: int, value: any, data_type: DataType) -> None:
-    #     pass

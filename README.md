@@ -10,9 +10,9 @@
 
 ## Description
 
-EasyS7Comm is a simplified abstraction of the powerful Snap7 tool, developed in Python. This project was created to make Snap7 accessible to automation professionals with limited programming knowledge. With EasyS7Comm, you can perform read and write operations on variables quickly and efficiently using minimal code.
+EasyS7Comm is a simplified abstraction of the powerful [Python-Snap7](https://github.com/gijzelaerr/python-snap7) tool. This project was created to make Snap7 **accessible to automation professionals with limited programming knowledge**. With EasyS7Comm, you can perform read and write operations on variables quickly and efficiently using minimal code.
 
-While EasyS7Comm abstracts some of Snap7's advanced features, this trade-off is ideal for those who need straightforward and easy-to-use automation solutions.
+While EasyS7Comm abstracts some of [Python-Snap7](https://github.com/gijzelaerr/python-snap7)'s advanced features, this trade-off is ideal for those who need straightforward and easy-to-use automation solutions.
 
 ## Features
 

@@ -1,6 +1,7 @@
 import snap7
-from snap7.util import get_int, set_int
-from easys7comm import PLCReader, DataType, PLCWriter
+from .plc_reader import PLCReader
+from .plc_writer import PLCWriter
+from .plc_types import DataType
 
 class PLC:
     def __init__(self, ip: str, rack: int = 0, slot: int = 1):
@@ -35,18 +36,4 @@ class PLC:
         """
         self.client.disconnect()
         self.client.destroy()
-
-# Example usage
-if __name__ == "__main__":
-    plc = PLC("10.254.176.81")
-    try:
-        print("Leitura Bool:")
-        print("Leitura Byte:", plc.read("DB20.DBB1", DataType.BYTE))
-        print("Leitura Int:", plc.read("DB20.DBW2", DataType.INT))
-        print("Leitura String:", plc.read("DB20.DBX12.0", DataType.STRING))
-        print("Escrita: Bool")
-        print("Escrita: ", plc.write("DB20.DBB1", 2, DataType.BYTE))
-        print("Escrita: ", plc.write("DB20.DBW2", 321, DataType.INT))
-        print("Escrita: ", plc.write("DB20.DBX12.0", "Marum", DataType.STRING))
-    finally:
-        plc.close()
+        

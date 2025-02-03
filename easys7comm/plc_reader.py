@@ -6,8 +6,10 @@ class PLCReader:
     def __init__(self, plc):
         self.plc = plc
 
-    def parse_value(self, bytearray, data_type):
+    def parse_value(self, bytearray, data_type: DataType):
         getter = getattr(util, data_type.method_get_name)
+        if data_type == DataType.BOOL:
+            return getter(bytearray, 0, 0)
         return getter(bytearray, 0)
 
     def read_db_row(self, db_number: int, offset: int, data_type: DataType):

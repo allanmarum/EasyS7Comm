@@ -23,6 +23,7 @@ class DataType(Enum):
     WCHAR   = ("get_wchar",  None,         2)   # No corresponding setter
     WSTRING = ("get_wstring", None,        508)  # Wide string, default size
 
+    @staticmethod
     def __init__(self, method_get_name, method_set_name, size):
         self.method_get_name = method_get_name
         self.method_set_name = method_set_name

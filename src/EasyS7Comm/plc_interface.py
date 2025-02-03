@@ -40,6 +40,13 @@ class PLCInterface:
         data = self.client.db_read(db_number, offset_byte, data_type.size)
         get_function = getattr(util, data_type.method_get_name, None)
         return get_function(data, 0)
+        
+    def write_db_row(self, db_number: int, offset_byte: int, size: int, value, data_type: 'DataType'):
+        get_function = getattr(util, data_type.method_set_name, None)
+        data_bytes = bytearray(data_type.size)
+        get_function(data_bytes, 0, value)
+        #util.set_dint(data_bytes, 0, value)
+        return data_bytes
     
     def disconnect(self):
         if self.client.get_connected():
@@ -49,5 +56,6 @@ class PLCInterface:
 if __name__ == "__main__":
     plc = PLCInterface("10.254.176.88", 0, 1)
     data =  plc.read_db_row(7, 6, DataType.STRING)
+    print(plc.write_db_row(7, 6, 1, 123.321, DataType.REAL))
     print(data)
     plc.disconnect()

@@ -59,3 +59,4 @@ if __name__ == "__main__":
     print(plc.write_db_row(7, 6, 1, 123.321, DataType.REAL))
     print(data)
     plc.disconnect()
+

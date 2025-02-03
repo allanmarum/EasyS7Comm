@@ -1,14 +1,13 @@
 # examples/basic_usage.py
-
-from easys7comm import PLCInterface, DataType
+from easys7comm import PLCConnection, DataType, PLCReader
 
 def main():
     # Replace with your PLC's IP address and configuration
-    plc = PLCInterface("127.0.0.1", 0, 1)
+    plc = PLCConnection("10.254.176.88", 0, 1)
     
     try:
         # Example: read a STRING from DB7 at byte offset 6
-        data = plc.read_db_row(7, 6, DataType.STRING)
+        data = PLCReader.read_db_row(7, 6, DataType.STRING)
         print("Read data:", data)
         
         # Example: write a REAL value to DB7 at byte offset 6

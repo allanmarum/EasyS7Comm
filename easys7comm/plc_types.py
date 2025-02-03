@@ -14,14 +14,14 @@ class DataType(Enum):
     REAL    = ("get_real",   "set_real",   4)
     LREAL   = ("get_lreal",  "set_lreal",  8)
     CHAR    = ("get_char",   None,         1)   # No corresponding setter
-    STRING  = ("get_string", "set_string", 256)  # Default size
-    FS_STRING = ("get_fstring", "set_fstring", 256)
+    STRING  = ("get_string", "set_string", 254)  # Default size
+    FS_STRING = ("get_fstring", "set_fstring", 254)
     TIME    = ("get_time",   "set_time",   4)
     DATE    = (None,         "set_date",   2)   # No corresponding getter
     USINT   = ("get_usint",  "set_usint",  1)
     SINT    = ("get_sint",   "set_sint",   1)
     WCHAR   = ("get_wchar",  None,         2)   # No corresponding setter
-    WSTRING = ("get_wstring", None,        512)  # Wide string, default size
+    WSTRING = ("get_wstring", None,        508)  # Wide string, default size
 
     def __init__(self, method_get_name, method_set_name, size):
         self.method_get_name = method_get_name

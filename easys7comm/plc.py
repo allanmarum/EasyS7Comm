@@ -14,6 +14,9 @@ class PLC:
         self.client = snap7.client.Client()
         self.client.connect(self.ip, self.rack, self.slot)
 
+    def get_connected(self):
+        return self.client.get_connected()
+
     def read(self, address: str, data_type: DataType):
         """
         Reads a block of data from the PLC.

@@ -1,6 +1,6 @@
 from snap7 import util
 from .plc_types import DataType
-from .utils.plc_parse_address import PlcParseAddress
+from .plc_parse_address import PlcParseAddress
 
 class PLCWriter:
     def __init__(self, plc):

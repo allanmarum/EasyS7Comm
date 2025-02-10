@@ -1,4 +1,4 @@
-from ..plc_types import DataType
+from .plc_types import DataType
 import re
 
 class PlcParseAddress:

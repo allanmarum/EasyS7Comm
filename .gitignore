@@ -175,3 +175,4 @@ cython_debug/
 
 
 easys7comm.egg-info/
+setup.py

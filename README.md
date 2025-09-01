@@ -55,7 +55,10 @@ from easys7comm import PLC, DataType
 
 def main():
     try:
-        # Create a PLC instance with the specified IP address
+        # Create a PLC instance with the specified IP address.
+        # By default the connection is opened immediately; pass
+        # ``auto_connect=False`` to postpone it until ``plc.connect()`` is
+        # invoked.
         plc = PLC("192.168.0.2")
         
         # Write the string "Allan" to the PLC variable

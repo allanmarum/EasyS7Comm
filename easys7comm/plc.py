@@ -29,28 +29,53 @@ class PLC:
     writing data, and managing the connection lifecycle.
     """
 
-    def __init__(self, ip: str, rack: int = 0, slot: int = 1):
+    def __init__(self, ip: str, rack: int = 0, slot: int = 1, *, auto_connect: bool = True):
         """
-        Initializes a PLC object with the given IP address, rack, and slot.
+        Initializes a PLC object with the given IP address, rack and slot.
 
-        Args:
-            ip (str): The PLC's IP address.
-            rack (int, optional): The rack number (default is 0).
-            slot (int, optional): The slot number (default is 1).
+        Parameters
+        ----------
+        ip:
+            The PLC's IP address.
+        rack:
+            The rack number. Defaults to ``0``.
+        slot:
+            The slot number. Defaults to ``1``.
+        auto_connect:
+            When ``True`` (default) a connection to the PLC is attempted
+            immediately.  Set to ``False`` to postpone the connection until
+            :meth:`connect` is called.  This is useful for testing or when the
+            network might be unavailable during object construction.
 
-        Raises:
-            ConnectionError: If unable to establish a connection.
+        Raises
+        ------
+        ConnectionError
+            If ``auto_connect`` is ``True`` and the connection cannot be
+            established.
         """
         self.ip = ip
         self.rack = rack
         self.slot = slot
 
-        # Create and establish a connection with the PLC
+        # Client instance used for all communications
         self.client = snap7.client.Client()
+
+        if auto_connect:
+            self.connect()
+
+    def connect(self) -> None:
+        """Establishes a connection with the PLC.
+
+        This method can be called manually when ``auto_connect`` is disabled in
+        the constructor.  It will raise a :class:`ConnectionError` if the
+        underlying snap7 client fails to connect.
+        """
         try:
             self.client.connect(self.ip, self.rack, self.slot)
         except Exception as exc:
-            raise ConnectionError(f"Failed to connect to PLC at {ip}: {exc}") from exc
+            raise ConnectionError(
+                f"Failed to connect to PLC at {self.ip}: {exc}"
+            ) from exc
 
     def get_connected(self) -> bool:
         """
@@ -96,5 +121,6 @@ class PLC:
 
         This method should be called when the PLC object is no longer needed.
         """
-        self.client.disconnect()
+        if self.client.get_connected():
+            self.client.disconnect()
         self.client.destroy()

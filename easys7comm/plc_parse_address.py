@@ -1,8 +1,9 @@
-from .plc_types import DataType
 import re
 
+from .plc_types import DataType
+
+
 class PlcParseAddress:
-   
     @staticmethod
     def parse_address(addr: str):
         if addr.upper().startswith("DB"):
@@ -17,11 +18,11 @@ class PlcParseAddress:
                 if typ != "DBX" and bit is not None:
                     raise ValueError(f"Unexpected bit value for {typ}: {addr}")
                 return {
-                    "address_category": "DB", 
-                    "db": db, 
-                    "addr_type": typ, 
-                    "byte_offset": byte_offset, 
-                    "bit": bit
+                    "address_category": "DB",
+                    "db": db,
+                    "addr_type": typ,
+                    "byte_offset": byte_offset,
+                    "bit": bit,
                 }
             raise ValueError(f"Invalid DB address format: {addr}")
 

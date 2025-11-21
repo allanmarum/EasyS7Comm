@@ -10,16 +10,16 @@
 
 ## Description
 
-EasyS7Comm is a simplified abstraction of the powerful [Python-Snap7](https://github.com/gijzelaerr/python-snap7) tool. This project was created to make Snap7 **accessible to automation professionals with limited programming knowledge**. With EasyS7Comm, you can perform read and write operations on variables quickly and efficiently using minimal code.
+EasyS7Comm is a compact abstraction layer over [Python-Snap7](https://github.com/gijzelaerr/python-snap7) designed to help automation professionals interact with Siemens PLCs using a few lines of Python. It streamlines connection handling and provides high-level helpers for reading and writing common data types.
 
-While EasyS7Comm abstracts some of [Python-Snap7](https://github.com/gijzelaerr/python-snap7)'s advanced features, this trade-off is ideal for those who need straightforward and easy-to-use automation solutions.
+While the project is still young, it already supports core PLC interactions without needing to touch raw Snap7 buffers.
 
 ## Features
 
-- **Read Variables:** ![Read](https://img.shields.io/badge/read-partial-yellow)
-- **Write Variables:** ![Write](https://img.shields.io/badge/write-not%20developed-red)
-- **Simplified Connection:** ![Connection](https://img.shields.io/badge/read-partial-yellow)
-- **Error Management:** ![Error Handling](https://img.shields.io/badge/error%20handling-not%20developed-red)
+- **Read Variables:** ![Read](https://img.shields.io/badge/read-implemented-green) Read DB, memory (M), input (I), and output (Q) areas, including bit-level access for booleans.
+- **Write Variables:** ![Write](https://img.shields.io/badge/write-implemented-green) Write to DB, M, I, and Q addresses with type validation and bit-aware BOOL writes.
+- **Simplified Connection:** ![Connection](https://img.shields.io/badge/connection-implemented-green) Automatically connect on initialization or defer with `auto_connect=False`.
+- **Error Management:** ![Error Handling](https://img.shields.io/badge/error%20handling-basic-blue) Converts Snap7 errors into clear Python exceptions for connection failures and unsupported operations.
 
 ---
 ## Prerequisites
@@ -31,6 +31,8 @@ Ensure you have Python installed on your system.
 - **Download**: You must download the `snap7.dll` from [SourceForge](https://sourceforge.net/projects/snap7/).
 - **Configuration**: After downloading, place the `snap7.dll` in a directory that is accessible in your system's `PATH`. This ensures that EasyS7Comm can locate it during execution.
 
+> On Linux you will typically need the Snap7 shared library (e.g., `libsnap7.so`). Refer to the Snap7 project instructions for your platform.
+
 ---
 ## Installation
 
@@ -40,6 +42,7 @@ Clone the repository and install the dependencies.
 # Clone the repository
 git clone https://github.com/your-username/easys7comm.git
 cd easys7comm
+pip install -r requirements.txt
 ```
 
 > **Note:** If EasyS7Comm becomes available on PyPI in the future, installation might be as simple as using `pip install easys7comm`.
@@ -47,36 +50,50 @@ cd easys7comm
 ---
 ## How to Use
 
-Below is an example demonstrating how to use EasyS7Comm for reading and writing operations with a PLC.
+### Quick Example
 
 ```Python
 # examples/basic_usage.py
 from easys7comm import PLC, DataType
 
 def main():
-    try:
-        # Create a PLC instance with the specified IP address.
-        # By default the connection is opened immediately; pass
-        # ``auto_connect=False`` to postpone it until ``plc.connect()`` is
-        # invoked.
-        plc = PLC("192.168.0.2")
-        
-        # Write the string "Allan" to the PLC variable
-        plc.write("DB20.DBX12.0", "Allan", DataType.STRING)
-        
-        # Read and print the value from the variable
-        print(plc.read("DB20.DBX12.0", DataType.STRING))
-        
-        # Check and print if the connection is active
-        print(plc.get_connected())
-        
-    except Exception as e:
-        print("An error occurred:", e)
-        
-    finally:
-        # Close the connection with the PLC
-        plc.close()
+    plc = PLC("192.168.0.2")  # pass auto_connect=False to delay connection
+
+    # Write a value to a DB address (bit-level BOOL supported)
+    plc.write("DB20.DBX12.0", True, DataType.BOOL)
+
+    # Read back the value
+    value = plc.read("DB20.DBX12.0", DataType.BOOL)
+    print("DB20.DBX12.0:", value)
+
+    # Read from memory, input, or output areas
+    print("M0.0:", plc.read("M0.0", DataType.BOOL))
+    print("I4:", plc.read("I4", DataType.BYTE))
+    print("Q8:", plc.read("Q8", DataType.BYTE))
+
+    plc.close()
+
+if __name__ == "__main__":
+    main()
 ```
 
 > **Tip:** Ensure your PLC is properly configured and your network connection is stable to avoid connection issues.
+
+### Supported Address Formats
+
+- **DB**: `DB{number}.{type}{byte}[.{bit}]` (e.g., `DB1.DBD0`, `DB20.DBX12.0`). Bit is required for `DBX` (BOOL) and must be omitted for other types.
+- **Memory (M)**: `M{byte}[.{bit}]` (e.g., `M0`, `M10.2`).
+- **Inputs (I)**: `I{byte}[.{bit}]` (e.g., `I0`, `I4.1`).
+- **Outputs (Q)**: `Q{byte}[.{bit}]` (e.g., `Q0`, `Q8.7`).
+
+### Data Types
+
+Pass one of the `DataType` enum members to control parsing and serialization. Common options include:
+
+- `DataType.BOOL` (bit-aware)
+- `DataType.BYTE`, `DataType.WORD`, `DataType.DWORD`
+- `DataType.INT`, `DataType.DINT`, `DataType.REAL`, `DataType.LREAL`
+- `DataType.STRING` / `DataType.FS_STRING`
+
+> Some types are read-only or write-only depending on Snap7 support. The library raises a `ValueError` if a write is attempted on a read-only type.
 

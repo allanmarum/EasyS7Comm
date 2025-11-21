@@ -4,8 +4,22 @@ from .plc_types import DataType
 
 
 class PlcParseAddress:
+    """Parser for Siemens-style PLC address strings."""
+
     @staticmethod
     def parse_address(addr: str):
+        """Parse a Siemens address into its components.
+
+        Args:
+            addr: Address string such as ``"DB1.DBW0"`` or ``"M10.0"``.
+
+        Returns:
+            A dictionary containing the parsed components.
+
+        Raises:
+            ValueError: If the address format is invalid or missing bits where required.
+        """
+
         if addr.upper().startswith("DB"):
             m = re.match(r"DB(\d+)\.([A-Za-z]+)(\d+)(?:\.(\d+))?", addr, re.IGNORECASE)
             if m:

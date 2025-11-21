@@ -1,0 +1,29 @@
+site_name: EasyS7Comm Docs
+site_description: Wrapper Python para Snap7 com leitura/escrita simplificada em CLPs Siemens
+site_url: https://example.com
+repo_url: https://github.com/
+
+nav:
+  - Visão geral: index.md
+  - Instalação: installation.md
+  - Guia rápido: quickstart.md
+  - API Reference: api/reference.md
+  - User Guide:
+      - Visão geral: user-guide/index.md
+      - Ler valores: user-guide/read.md
+      - Escrever valores: user-guide/write.md
+      - Problemas comuns: user-guide/errors.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+            inherited_members: true
+            merge_init_into_class: true
+
+theme:
+  name: mkdocs

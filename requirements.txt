@@ -1,1 +1,3 @@
 python-snap7
+mkdocs
+mkdocstrings[python]
